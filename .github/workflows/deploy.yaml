@@ -1,7 +1,8 @@
 name: deploy
-
 on:
   push:
+    branches: ["main"]
+  pull_request:
     branches: ["main"]
   workflow_dispatch:
 
@@ -15,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,6 +33,10 @@ jobs:
         run: npm clean-install
         working-directory: launchpad
 
+      - name: Run pre-flight test
+        run: npm run test
+        working-directory: launchpad
+
       - name: Build project
         run: npm run build
         working-directory: launchpad
@@ -46,7 +51,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
