@@ -39,7 +39,7 @@ jobs:
         working-directory: launchpad
 
       - name: Report status
-run: bash launchpad/scripts/report.sh
+       run: bash scripts/report.sh
         env:
           BOARD_URL: ${{ vars.BOARD_URL }}
           SHIPIT_TOKEN: ${{ secrets.SHIPIT_TOKEN }}
