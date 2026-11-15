@@ -38,6 +38,12 @@ jobs:
         run: npm run test
         working-directory: launchpad
 
+      - name: Report status
+        run: bash scripts/report.sh
+        env:
+          BOARD_URL: ${{ vars.BOARD_URL }}
+          SHIPIT_TOKEN: ${{ secrets.SHIPIT_TOKEN }}
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -59,6 +65,8 @@ jobs:
       - name: Build project
         run: npm run build
         working-directory: launchpad
+        env:
+          VITE_BOARD_URL: ${{ vars.BOARD_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
