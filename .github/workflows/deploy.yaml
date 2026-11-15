@@ -42,7 +42,7 @@ jobs:
         run: bash scripts/report.sh
         working-directory: launchpad
         env:
-          BOARD_URL: "https://board.infratify.com"
+          BOARD_URL: ${{ vars.BOARD_URL }}
           SHIPIT_TOKEN: ${{ secrets.SHIPIT_TOKEN }}
 
   deploy:
